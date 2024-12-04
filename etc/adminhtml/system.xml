@@ -19,7 +19,7 @@
 				<field id="webhook_integration" type="text" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
 					<label>Webhook integration</label>
 					<comment>Url webhook integration</comment>
-					<config_path>smsfunnel/smsfunnel/url</config_path>
+					<config_path>smsfunnel/smsfunnel/api_url</config_path>
 				</field>
 			</group>
 		</section>

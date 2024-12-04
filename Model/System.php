@@ -9,11 +9,12 @@ declare(strict_types=1);
 
 namespace SmsFunnel\SmsFunnel\Model;
 
+use SmsFunnel\SmsFunnel\Api\SystemInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\App\Config\Storage\WriterInterface;
 use Magento\Store\Model\ScopeInterface;
 
-class System
+class System implements SystemInterface
 {
     /**
      * Class constructor.
@@ -56,7 +57,7 @@ class System
      */
     public function getSmsFunnelUrl(): string
     {
-        return (string)Config::SMSFUNNEL_API_URL;
+        return (string) $this->getValue(Config::SMSFUNNEL_API_URL);
     }
 
 }

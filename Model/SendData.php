@@ -16,30 +16,57 @@ use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\ResponseFactory;
 use SmsFunnel\SmsFunnel\Api\SystemInterface;
-
+use Magento\Framework\Webapi\Rest\Request;
 
 class SendData
 {
+    /**
+     * Class constructor.
+     */
     public function __construct(
-        private SystemInterface $systemInterface, 
-        private ClientFactory $clientFactory, 
+        private SystemInterface $systemInterface,
+        private Client $client,
+        private ClientFactory $clientFactory,
         private ResponseFactory $responseFactory
-    )
-    {}
-
+    ) {}
+    
+    /**
+     * @param $uriEndpoint
+     * @param $param
+     * @param $requestMethod
+     */
     public function doRequest(
-        string $uriEndpoint, 
         array $param = [],
         string $requestMethod = Request::HTTP_METHOD_POST
-    ): void
+    ): Response
     {
-        if ($this->systemInterface->getEnable())
-        {
-            try {
+        try {
+            $header = [
+                'Content-Type' => 'application/json',
+                'User-Agent' => 'insomnia/2023.5.8'
+                ];
 
-            } catch (GuzzleException $exception) {
+            $uriEndpoint = $this->systemInterface->getSmsFunnelUrl();
 
-            }
+            $response = $this->client->request(
+                $requestMethod,
+                $uriEndpoint,
+                [
+                    'headers' => $header,
+                    'json' => $param
+                ]
+            );
+
+        } catch (GuzzleException $exception) {
+            $response = $this->responseFactory->create(
+                [
+                    'status' => $exception->getCode(),
+                    'reason' => $exception->getMessage()
+                ]
+            );
         }
+        return $response;
+        
     }
+
 }
