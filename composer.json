@@ -1,0 +1,25 @@
+{
+    "name": "smsfunnel/module-smsfunnel",
+    "description": "SMSFunnel api integration module",
+    "type": "magento2-module",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "SMSFunnel"
+        },
+        {
+            "name": "Esmerio Neto",
+            "email": "esmerioneto@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "SmsFunnel\\SmsFunnel\\": ""
+        }
+    }
+}
