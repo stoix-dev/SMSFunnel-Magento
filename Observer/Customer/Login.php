@@ -1,8 +1,8 @@
 <?php
 /**
-* SMSFunnel | RegisterSuccess.php
+* SMSFunnel | Login.php
 * @category SMSFunnel
-* @copyright Copyright (c) 2024 SMSFunnel - Magento Solution Partner.
+* @copyright Copyright (c) 2024 SMSFUNNEL - Magento Solution Partner.
 * @author Esmerio Neto
 */
 
@@ -14,16 +14,19 @@ use \Magento\Framework\Event\Observer;
 use \Magento\Framework\Event\ObserverInterface;
 use SmsFunnel\SmsFunnel\Model\SendData;
 use SmsFunnel\SmsFunnel\Api\SystemInterface;
+use Magento\Framework\Stdlib\DateTime\TimezoneInterface;
 
-class RegisterSuccess implements ObserverInterface
+class Login implements ObserverInterface
 {
     /**
      * @param \SmsFunnel\SmsFunnel\Model\SendData $sendData
      * @param \SmsFunnel\SmsFunnel\Api\SystemInterface $systemInterface
+     * @param \Magento\Framework\Stdlib\DateTime\TimezoneInterface
      */
     public function __construct(
         private SendData $sendData,
-        private SystemInterface $systemInterface
+        private SystemInterface $systemInterface,
+        private TimezoneInterface $timezone
     ) {}
 
     /**
@@ -39,13 +42,11 @@ class RegisterSuccess implements ObserverInterface
             $customer = $observer->getCustomer();
             
             $customerData = array(
-                "event" => "customer_register_success",
+                "event" => "customer_login",
                 "customer_id" => $customer->getId(),
                 "email" =>  $customer->getEmail(),
-                "first_name" => $customer->getFirstName(),
-                "last_name" => $customer->getLastName(),
                 "phone" => $this->getPhone($customer),
-                "created_at" => $customer->getCreatedAt()
+                "login_at" => $this->getTime()
             );
 
             $this->sendData->doRequest(
@@ -62,11 +63,19 @@ class RegisterSuccess implements ObserverInterface
     private function getPhone($customer): string
     {
         $customerAttributes = $customer->getCustomAttributes();
-        if (array_key_exists('phone', $customerAttributes))
+        if (is_array($customerAttributes))
         {
-            $phoneNumber = $customerAttributes['phone'];
-            return $phoneNumber->getValue();
+            foreach($customerAttributes as $customerAttribute)
+            if ($customerAttribute['attribute_code'] == 'phone')
+            {
+                return $customerAttribute['value'];
+            }
+            return '';
         }
-        return '';
+    }
+
+    private function getTime()
+    {
+        return $this->timezone->date(time())->format('Y-m-d\TH:i:s\Z');
     }
 }

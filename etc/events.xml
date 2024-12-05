@@ -3,4 +3,7 @@
 	<event name="customer_register_success">
 		<observer name="smsfunnel_smsfunnel_observer_customer_registersuccess_customer_register_success" instance="SmsFunnel\SmsFunnel\Observer\Customer\RegisterSuccess"/>
 	</event>
+	<event name="customer_login">
+		<observer name="smsfunnel_smsfunnel_observer_customer_login_customer_login" instance="SmsFunnel\SmsFunnel\Observer\Customer\Login"/>
+	</event>
 </config>
