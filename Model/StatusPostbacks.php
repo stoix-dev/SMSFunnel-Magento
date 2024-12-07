@@ -1,6 +1,6 @@
 <?php
 /**
-* SMSFunnel | Config.php
+* SMSFunnel | StatusPostbacks.php
 * @category SMSFunnel
 * @copyright Copyright (c) 2024 SMSFUNNEL - Magento Solution Partner.
 * @author Esmerio Neto
@@ -9,9 +9,10 @@ declare(strict_types=1);
 
 namespace SmsFunnel\SmsFunnel\Model;
 
-
-class Config
+enum StatusPostbacks: string
 {
-    const SMSFUNNEL_ENABLE = 'smsfunnel/smsfunnel/enable';
-    const SMSFUNNEL_API_URL = 'smsfunnel/smsfunnel/api_url';
+    case PENDDING = 'pendding';
+    case PROCESSING = 'processing';
+    case FAIL = 'fail';
+    case SUCCESS = 'success';
 }

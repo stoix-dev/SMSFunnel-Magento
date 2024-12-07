@@ -3,6 +3,12 @@
 	<acl>
 		<resources>
 			<resource id="Magento_Backend::admin">
+				<resource id="SmsFunnel_SmsFunnel::postbacks" title="postbacks" sortOrder="10">
+					<resource id="SmsFunnel_SmsFunnel::postbacks_save" title="Save postbacks" sortOrder="10"/>
+					<resource id="SmsFunnel_SmsFunnel::postbacks_delete" title="Delete postbacks" sortOrder="20"/>
+					<resource id="SmsFunnel_SmsFunnel::postbacks_update" title="Update postbacks" sortOrder="30"/>
+					<resource id="SmsFunnel_SmsFunnel::postbacks_view" title="View postbacks" sortOrder="40"/>
+				</resource>
 				<resource id="Magento_Backend::stores">
 					<resource id="Magento_Backend::stores_settings">
 						<resource id="Magento_Config::config">

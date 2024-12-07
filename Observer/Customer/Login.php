@@ -15,6 +15,10 @@ use \Magento\Framework\Event\ObserverInterface;
 use SmsFunnel\SmsFunnel\Model\SendData;
 use SmsFunnel\SmsFunnel\Api\SystemInterface;
 use Magento\Framework\Stdlib\DateTime\TimezoneInterface;
+use SmsFunnel\SmsFunnel\Model\Postbacks;
+use SmsFunnel\SmsFunnel\Logger\Logger;
+use SmsFunnel\SmsFunnel\Model\SaveData;
+use SmsFunnel\SmsFunnel\Model\StatusPostbacks;
 
 class Login implements ObserverInterface
 {
@@ -22,11 +26,16 @@ class Login implements ObserverInterface
      * @param \SmsFunnel\SmsFunnel\Model\SendData $sendData
      * @param \SmsFunnel\SmsFunnel\Api\SystemInterface $systemInterface
      * @param \Magento\Framework\Stdlib\DateTime\TimezoneInterface
+     * @param \SmsFunnel\SmsFunnel\Logger\Logger $logger
+     * @param \SmsFunnel\SmsFunnel\Model\SaveData $saveData
      */
     public function __construct(
         private SendData $sendData,
         private SystemInterface $systemInterface,
-        private TimezoneInterface $timezone
+        private TimezoneInterface $timezone,
+        private Postbacks $postbacks,
+        private Logger $logger,
+        private SaveData $saveData
     ) {}
 
     /**
@@ -49,10 +58,16 @@ class Login implements ObserverInterface
                 "login_at" => $this->getTime()
             );
 
-            $this->sendData->doRequest(
-                $customerData,
-                "POST"
-            );
+            try {
+                $this->saveData->save($customerData, StatusPostbacks::PENDDING);
+            } catch(\Exception $e) {
+                $this->logger->error(print_r($e->getMessage(), true));
+            }
+
+            // $this->sendData->doRequest(
+            //     $customerData,
+            //     "POST"
+            // );
         }
     }
 
