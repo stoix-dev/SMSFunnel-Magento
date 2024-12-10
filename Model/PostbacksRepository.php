@@ -19,35 +19,10 @@ use SmsFunnel\SmsFunnel\Api\Data\PostbacksSearchResultsInterfaceFactory;
 use SmsFunnel\SmsFunnel\Api\PostbacksRepositoryInterface;
 use SmsFunnel\SmsFunnel\Model\ResourceModel\Postbacks as ResourcePostbacks;
 use SmsFunnel\SmsFunnel\Model\ResourceModel\Postbacks\CollectionFactory as PostbacksCollectionFactory;
+use Magento\Framework\Api\SearchCriteriaInterface;
 
 class PostbacksRepository implements PostbacksRepositoryInterface
 {
-
-    /**
-     * @var PostbacksInterfaceFactory
-     */
-    protected $postbacksFactory;
-
-    /**
-     * @var Postbacks
-     */
-    protected $searchResultsFactory;
-
-    /**
-     * @var ResourcePostbacks
-     */
-    protected $resource;
-
-    /**
-     * @var CollectionProcessorInterface
-     */
-    protected $collectionProcessor;
-
-    /**
-     * @var PostbacksCollectionFactory
-     */
-    protected $postbacksCollectionFactory;
-
 
     /**
      * @param ResourcePostbacks $resource
@@ -57,18 +32,12 @@ class PostbacksRepository implements PostbacksRepositoryInterface
      * @param CollectionProcessorInterface $collectionProcessor
      */
     public function __construct(
-        ResourcePostbacks $resource,
-        PostbacksInterfaceFactory $postbacksFactory,
-        PostbacksCollectionFactory $postbacksCollectionFactory,
-        PostbacksSearchResultsInterfaceFactory $searchResultsFactory,
-        CollectionProcessorInterface $collectionProcessor
-    ) {
-        $this->resource = $resource;
-        $this->postbacksFactory = $postbacksFactory;
-        $this->postbacksCollectionFactory = $postbacksCollectionFactory;
-        $this->searchResultsFactory = $searchResultsFactory;
-        $this->collectionProcessor = $collectionProcessor;
-    }
+        protected ResourcePostbacks $resource,
+        protected PostbacksInterfaceFactory $postbacksFactory,
+        protected PostbacksCollectionFactory $postbacksCollectionFactory,
+        protected PostbacksSearchResultsInterfaceFactory $searchResultsFactory,
+        protected CollectionProcessorInterface $collectionProcessor
+    ) {}
 
     /**
      * @inheritDoc
@@ -93,7 +62,7 @@ class PostbacksRepository implements PostbacksRepositoryInterface
     {
         $postbacks = $this->postbacksFactory->create();
         $this->resource->load($postbacks, $postbacksId);
-        if (!$postbacks->getId()) {
+        if (!$postbacks->getEntityId()) {
             throw new NoSuchEntityException(__('postbacks with id "%1" does not exist.', $postbacksId));
         }
         return $postbacks;
@@ -103,7 +72,7 @@ class PostbacksRepository implements PostbacksRepositoryInterface
      * @inheritDoc
      */
     public function getList(
-        \Magento\Framework\Api\SearchCriteriaInterface $criteria
+        SearchCriteriaInterface $criteria
     ) {
         $collection = $this->postbacksCollectionFactory->create();
         

@@ -63,11 +63,7 @@ class Login implements ObserverInterface
             } catch(\Exception $e) {
                 $this->logger->error(print_r($e->getMessage(), true));
             }
-
-            // $this->sendData->doRequest(
-            //     $customerData,
-            //     "POST"
-            // );
+            
         }
     }
 

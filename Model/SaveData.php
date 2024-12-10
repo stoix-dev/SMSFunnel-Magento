@@ -34,7 +34,7 @@ class SaveData
             $this->postbacks->setJsonData(
                 json_encode(
                     $data,
-                    JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES
+                    JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE
                 )
             );
             $this->postbacks->setStatus($status->value);
@@ -42,6 +42,28 @@ class SaveData
         } catch (\Exception $e) {
             $this->logger->error(print_r($e->getMessage(), true));
         }
+    }
+
+    public function updateStatus($id,  int $attempts, $status)
+    {
+        $postbackData = $this->loadPostback($id);
+
+        if ($postbackData->getCustomerId())
+        {
+            try {
+                $this->postbacks->setStatus($status->value);
+                $this->postbacks->setAttempts($attempts);
+                $this->postbacks->save();
+            } catch (\Exception $e) {
+                $this->logger->error(print_r($e->getMessage(), true));
+            }
+        }
+    }
+
+
+    private function loadPostback($id)
+    {
+        return $this->postbacks->load($id);
     }
 
 
