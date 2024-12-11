@@ -40,8 +40,6 @@ class Postbacks
      */
     public function execute(): void
     {
-        $this->logger->info("Cronjob postbacks is executed.");
-
         try {
             $collection = $this->getPostbacksCollection();
             foreach ($collection as $item)
@@ -55,7 +53,7 @@ class Postbacks
                     $attempts,
                     StatusPostbacks::PROCESSING
                 );
-
+                
                 $result = $this->sendData->doRequest(
                     $customerData,
                     "POST"
@@ -69,9 +67,28 @@ class Postbacks
                         StatusPostbacks::SUCCESS
                     );
                 }
+
+                if ($result->getStatusCode() != 200)
+                {
+                    $this->saveData->updateStatus(
+                        $id,
+                        $attempts,
+                        StatusPostbacks::FAIL
+                    );
+                    $this->logger->error('======================');
+                    $this->logger->error(print_r($result->getStatusCode(), true));
+                    $this->logger->error('======================');
+                }
             }
         } catch (\Exception $e) {
+            $this->logger->error('-------------------------------');
             $this->logger->error(print_r($e->getMessage(), true));
+            $this->logger->error('-------------------------------');
+            $this->saveData->updateStatus(
+                $id,
+                $attempts,
+                StatusPostbacks::FAIL
+            );
         }
     }
 

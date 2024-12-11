@@ -1,11 +1,10 @@
 <?php
 /**
-* SMSFunnel | Login.php
+* SMSFunnel | DeleteAfter.php
 * @category SMSFunnel
 * @copyright Copyright (c) 2024 SMSFUNNEL - Magento Solution Partner.
 * @author Esmerio Neto
 */
-
 declare(strict_types=1);
 
 namespace SmsFunnel\SmsFunnel\Observer\Customer;
@@ -19,8 +18,9 @@ use SmsFunnel\SmsFunnel\Model\SaveData;
 use SmsFunnel\SmsFunnel\Model\StatusPostbacks;
 use SmsFunnel\SmsFunnel\Model\Tools;
 
-class Login implements ObserverInterface
+class DeleteAfter implements ObserverInterface
 {
+
     /**
      * @param SystemInterface $systemInterface
      * @param Logger $logger
@@ -34,7 +34,7 @@ class Login implements ObserverInterface
         private SaveData $saveData,
         private Tools $tools
     ) {}
-
+    
     /**
      * Execute observer
      *
@@ -46,13 +46,13 @@ class Login implements ObserverInterface
         if ($this->systemInterface->getEnable())
         {
             $customer = $observer->getCustomer();
-            
+
             $customerData = array(
-                "event" => "customer_login",
+                "event" => "customer_delete_after",
                 "customer_id" => $customer->getId(),
                 "email" =>  $customer->getEmail(),
-                "phone" => $this->tools->getPhone($customer),
-                "login_at" => $this->tools->getTime()
+                "phone" => $customer->getData('phone'),
+                "deleted_at" => $this->tools->getTime()
             );
 
             try {
@@ -62,5 +62,5 @@ class Login implements ObserverInterface
             }
         }
     }
-
 }
+

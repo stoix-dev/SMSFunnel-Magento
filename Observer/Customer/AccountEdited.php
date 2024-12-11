@@ -1,11 +1,10 @@
 <?php
 /**
-* SMSFunnel | Login.php
+* SMSFunnel | AccountEdited.php
 * @category SMSFunnel
 * @copyright Copyright (c) 2024 SMSFUNNEL - Magento Solution Partner.
 * @author Esmerio Neto
 */
-
 declare(strict_types=1);
 
 namespace SmsFunnel\SmsFunnel\Observer\Customer;
@@ -19,9 +18,10 @@ use SmsFunnel\SmsFunnel\Model\SaveData;
 use SmsFunnel\SmsFunnel\Model\StatusPostbacks;
 use SmsFunnel\SmsFunnel\Model\Tools;
 
-class Login implements ObserverInterface
+class AccountEdited implements ObserverInterface
 {
-    /**
+
+     /**
      * @param SystemInterface $systemInterface
      * @param Logger $logger
      * @param SaveData $saveData
@@ -48,19 +48,25 @@ class Login implements ObserverInterface
             $customer = $observer->getCustomer();
             
             $customerData = array(
-                "event" => "customer_login",
+                "event" => "customer_account_edited",
                 "customer_id" => $customer->getId(),
                 "email" =>  $customer->getEmail(),
                 "phone" => $this->tools->getPhone($customer),
-                "login_at" => $this->tools->getTime()
+                "changes" => array(
+                  "first_name" => "Jane",
+                  "last_name" => "Smith",
+                  "phone" => "+15559876543"
+                ),
+                "edited_at" => $this->tools->getTime()
             );
+
 
             try {
                 $this->saveData->save($customerData, StatusPostbacks::PENDDING);
             } catch(\Exception $e) {
                 $this->logger->error(print_r($e->getMessage(), true));
             }
+            
         }
     }
-
 }

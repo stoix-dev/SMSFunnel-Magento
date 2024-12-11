@@ -1,14 +1,13 @@
 <?php
 /**
-* SMSFunnel | Login.php
+* SMSFunnel | SubscriberSaveAfter.php
 * @category SMSFunnel
 * @copyright Copyright (c) 2024 SMSFUNNEL - Magento Solution Partner.
 * @author Esmerio Neto
 */
-
 declare(strict_types=1);
 
-namespace SmsFunnel\SmsFunnel\Observer\Customer;
+namespace SmsFunnel\SmsFunnel\Observer\Newsletter;
 
 use \Magento\Framework\Event\Observer;
 use \Magento\Framework\Event\ObserverInterface;
@@ -19,9 +18,10 @@ use SmsFunnel\SmsFunnel\Model\SaveData;
 use SmsFunnel\SmsFunnel\Model\StatusPostbacks;
 use SmsFunnel\SmsFunnel\Model\Tools;
 
-class Login implements ObserverInterface
+class SubscriberSaveAfter implements ObserverInterface
 {
-    /**
+
+     /**
      * @param SystemInterface $systemInterface
      * @param Logger $logger
      * @param SaveData $saveData
@@ -45,14 +45,17 @@ class Login implements ObserverInterface
     {
         if ($this->systemInterface->getEnable())
         {
-            $customer = $observer->getCustomer();
-            
+            $subscriber = $observer->getData('subscriber');
+
+            $customerId = $subscriber['customer_id'];
+            $customer = $this->tools->loadCustomer($customerId);
+
             $customerData = array(
-                "event" => "customer_login",
+                "event" => "newsletter_subscriber_save_after",
                 "customer_id" => $customer->getId(),
                 "email" =>  $customer->getEmail(),
                 "phone" => $this->tools->getPhone($customer),
-                "login_at" => $this->tools->getTime()
+                "subscribed_at" => $this->tools->getTime()
             );
 
             try {
@@ -62,5 +65,5 @@ class Login implements ObserverInterface
             }
         }
     }
-
 }
+

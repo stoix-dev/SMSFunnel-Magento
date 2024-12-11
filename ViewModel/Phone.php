@@ -29,7 +29,7 @@ class FavoriteColor implements ArgumentInterface
         $this->customerRepository = $customerRepository;
     }
 
-    public function getFavoriteColor()
+    public function getPhone()
     {
         $customerId = $this->customerSession->getCustomerId();
         $customer = $this->customerRepository->getById($customerId);

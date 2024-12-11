@@ -62,6 +62,7 @@ class SendData
                     'json' => json_decode($param)
                 ]
             );
+            $this->logger->error(print_r($response->getStatusCode(), true));
 
         } catch (GuzzleException $exception) {
             $response = $this->responseFactory->create(

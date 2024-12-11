@@ -12,9 +12,9 @@ $customerData = $block->getCustomerData();
 $phone = $customerData["phone"] ?? "";
 
 ?>
-<div class="field">
+<div class="field phone required">
     <label class="label" for="Phone">
-        <span><?= /** @noEscape */ __('Phone'); ?><span class="required">*</span></span>
+        <span><?= /** @noEscape */ __('Phone'); ?></span>
     </label>
     <div class="control">
         <input type="text" name="phone" id="phone"
@@ -22,6 +22,7 @@ $phone = $customerData["phone"] ?? "";
                class="input-text required-entry"
                maxlength="12"
                value="<?= /* @noEscape */ $phone ?>"
+               data-validate="{required:true}"
                required>
     </div>
 </div>

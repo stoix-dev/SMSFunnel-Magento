@@ -12,18 +12,25 @@ namespace SmsFunnel\SmsFunnel\Observer\Customer;
 
 use \Magento\Framework\Event\Observer;
 use \Magento\Framework\Event\ObserverInterface;
-use SmsFunnel\SmsFunnel\Model\SendData;
+use SmsFunnel\SmsFunnel\Model\SaveData;
 use SmsFunnel\SmsFunnel\Api\SystemInterface;
+use SmsFunnel\SmsFunnel\Model\StatusPostbacks;
+use SmsFunnel\SmsFunnel\Model\Tools;
+use SmsFunnel\SmsFunnel\Logger\Logger;
 
 class RegisterSuccess implements ObserverInterface
 {
     /**
-     * @param \SmsFunnel\SmsFunnel\Model\SendData $sendData
-     * @param \SmsFunnel\SmsFunnel\Api\SystemInterface $systemInterface
+     * @param SaveData $saveData
+     * @param SystemInterface $systemInterface
+     * @param Tools $tools
+     * @param Logger
      */
     public function __construct(
-        private SendData $sendData,
-        private SystemInterface $systemInterface
+        private SaveData $saveData,
+        private SystemInterface $systemInterface,
+        private Tools $tools,
+        private Logger $logger
     ) {}
 
     /**
@@ -44,29 +51,15 @@ class RegisterSuccess implements ObserverInterface
                 "email" =>  $customer->getEmail(),
                 "first_name" => $customer->getFirstName(),
                 "last_name" => $customer->getLastName(),
-                "phone" => $this->getPhone($customer),
+                "phone" => $this->tools->getPhone($customer),
                 "created_at" => $customer->getCreatedAt()
             );
 
-            $this->sendData->doRequest(
-                $customerData,
-                "POST"
-            );
+            try {
+                $this->saveData->save($customerData, StatusPostbacks::PENDDING);
+            } catch(\Exception $e) {
+                $this->logger->error(print_r($e->getMessage(), true));
+            }
         }
-    }
-
-    /**
-     * @param mixed $customer
-     * @return string
-     */
-    private function getPhone($customer): string
-    {
-        $customerAttributes = $customer->getCustomAttributes();
-        if (array_key_exists('phone', $customerAttributes))
-        {
-            $phoneNumber = $customerAttributes['phone'];
-            return $phoneNumber->getValue();
-        }
-        return '';
     }
 }

@@ -6,4 +6,22 @@
 	<event name="customer_login">
 		<observer name="smsfunnel_smsfunnel_observer_customer_login_customer_login" instance="SmsFunnel\SmsFunnel\Observer\Customer\Login"/>
 	</event>
+	<event name="customer_logout">
+		<observer name="smsfunnel_smsfunnel_observer_customer_logout_customer_logout" instance="SmsFunnel\SmsFunnel\Observer\Customer\Logout"/>
+	</event>
+	<event name="customer_account_edited">
+		<observer name="smsfunnel_smsfunnel_observer_customer_accountedited_customer_account_edited" instance="SmsFunnel\SmsFunnel\Observer\Customer\AccountEdited"/>
+	</event>
+	<event name="customer_delete_after">
+		<observer name="smsfunnel_smsfunnel_observer_customer_deleteafter_customer_delete_after" instance="SmsFunnel\SmsFunnel\Observer\Customer\DeleteAfter"/>
+	</event>
+	<event name="newsletter_subscriber_save_after">
+		<observer name="smsfunnel_smsfunnel_observer_newsletter_subscribersaveafter_newsletter_subscriber_save_after" instance="SmsFunnel\SmsFunnel\Observer\Newsletter\SubscriberSaveAfter"/>
+	</event>
+	<event name="sales_order_place_after">
+		<observer name="smsfunnel_smsfunnel_observer_sales_orderplaceafter_sales_order_place_after" instance="SmsFunnel\SmsFunnel\Observer\Sales\OrderPlaceAfter"/>
+	</event>
+	<event name="sales_order_save_after">
+		<observer name="smsfunnel_smsfunnel_observer_sales_ordersaveafter_sales_order_save_after" instance="SmsFunnel\SmsFunnel\Observer\Sales\OrderSaveAfter"/>
+	</event>
 </config>
