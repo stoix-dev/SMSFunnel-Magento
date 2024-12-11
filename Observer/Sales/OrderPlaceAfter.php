@@ -48,23 +48,26 @@ class OrderPlaceAfter implements ObserverInterface
     {
         if ($this->systemInterface->getEnable())
         {
-            $order = $observer->getOrder();
-            $customer = $this->customerRepository->getById($order->getCustomerId());
-            
-            $payload = array(
-                "event" => "sales_order_place_after",
-                "order_id" => $order->getIncrementId(),
-                "customer_id" => $order->getCustomerId(),
-                "email" =>  $customer->getEmail(),
-                "phone" => $this->tools->getPhone($customer),
-                "total" => $order->getGrandTotal(),
-                "currency" => $order->getData('base_currency_code'),
-                "created_at" => $this->tools->getTime()
-            );
-
             try {
-                $this->saveData->save($payload, StatusPostbacks::PENDDING);
-            } catch(\Exception $e) {
+                try {
+                    $order = $observer->getOrder();
+                    $customer = $this->tools->loadCustomerByEmail($order->getCustomerEmail());
+
+                    $payload = array(
+                        "event" => "sales_order_place_after",
+                        "order_id" => $order->getIncrementId(),
+                        "customer_id" => $order->getCustomerId(),
+                        "email" =>  $customer->getEmail(),
+                        "phone" => $this->tools->getPhone($customer),
+                        "total" => $order->getGrandTotal(),
+                        "currency" => $order->getData('base_currency_code'),
+                        "created_at" => $this->tools->getTime()
+                    );
+                    $this->saveData->save($payload, StatusPostbacks::PENDDING);
+                } catch(\Exception $e) {
+                    $this->logger->error(print_r($e->getMessage(), true));
+                }
+            } catch (\Throwable $e) {
                 $this->logger->error(print_r($e->getMessage(), true));
             }
         }

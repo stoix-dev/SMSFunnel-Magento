@@ -24,4 +24,13 @@
 	<event name="sales_order_save_after">
 		<observer name="smsfunnel_smsfunnel_observer_sales_ordersaveafter_sales_order_save_after" instance="SmsFunnel\SmsFunnel\Observer\Sales\OrderSaveAfter"/>
 	</event>
+	<event name="sales_order_payment_pay">
+		<observer name="smsfunnel_smsfunnel_observer_sales_orderpaymentpay_sales_order_payment_pay" instance="SmsFunnel\SmsFunnel\Observer\Sales\OrderPaymentPay"/>
+	</event>
+	<event name="sales_order_payment_cancel">
+		<observer name="smsfunnel_smsfunnel_observer_sales_orderpaymentcancel_sales_order_payment_cancel" instance="SmsFunnel\SmsFunnel\Observer\Sales\OrderPaymentCancel"/>
+	</event>
+	<event name="order_cancel_after">
+		<observer name="smsfunnel_smsfunnel_observer_sales_ordercancelafter_sales_order_cancel_after" instance="SmsFunnel\SmsFunnel\Observer\Sales\OrderCancelAfter"/>
+	</event>
 </config>

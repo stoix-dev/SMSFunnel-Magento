@@ -53,11 +53,11 @@ class AccountEdited implements ObserverInterface
                 "email" =>  $customer->getEmail(),
                 "phone" => $this->tools->getPhone($customer),
                 "changes" => array(
-                  "first_name" => "Jane",
-                  "last_name" => "Smith",
-                  "phone" => "+15559876543"
+                  "first_name" => $customer->getFirstName(),
+                  "last_name" => $customer->getLastName(),
+                  "phone" => $this->tools->getPhone($customer)
                 ),
-                "edited_at" => $this->tools->getTime()
+                "edited_at" => $customer->getUpdatedAt()
             );
 
 

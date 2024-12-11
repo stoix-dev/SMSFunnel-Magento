@@ -1,6 +1,6 @@
 <?php
 /**
-* SMSFunnel | OrderSaveAfter.php
+* SMSFunnel | OrderPaymentPay.php
 * @category SMSFunnel
 * @copyright Copyright (c) 2024 SMSFUNNEL - Magento Solution Partner.
 * @author Esmerio Neto
@@ -17,9 +17,8 @@ use SmsFunnel\SmsFunnel\Logger\Logger;
 use SmsFunnel\SmsFunnel\Model\SaveData;
 use SmsFunnel\SmsFunnel\Model\StatusPostbacks;
 use SmsFunnel\SmsFunnel\Model\Tools;
-use Magento\Customer\Api\CustomerRepositoryInterface;
 
-class OrderSaveAfter implements ObserverInterface
+class OrderPaymentPay implements ObserverInterface
 {
 
     /**
@@ -27,15 +26,13 @@ class OrderSaveAfter implements ObserverInterface
      * @param Logger $logger
      * @param SaveData $saveData
      * @param Tools $tools
-     * @param CustomerRepositoryInterface $customerRepository
      */
     public function __construct(
         private SystemInterface $systemInterface,
         private Postbacks $postbacks,
         private Logger $logger,
         private SaveData $saveData,
-        private Tools $tools,
-        private CustomerRepositoryInterface $customerRepository
+        private Tools $tools
     ) {}
     
     /**
@@ -50,17 +47,19 @@ class OrderSaveAfter implements ObserverInterface
         {
             try {
                 try {
-                    $order = $observer->getOrder();
+                    $orderId = $observer->getData('payment')->getOrder()->getEntityId();
+                    $order = $this->tools->loadOrder($orderId);
                     $customer = $this->tools->loadCustomerByEmail($order->getCustomerEmail());
                     
                     $payload = array(
-                        "event" => "sales_order_save_after",
+                        "event" => "sales_order_payment_pay",
                         "order_id" => $order->getIncrementId(),
-                        "customer_id" => $order->getCustomerId(),
+                        "customer_id" => $customer->getId(),
                         "email" =>  $customer->getEmail(),
                         "phone" => $this->tools->getPhone($customer),
-                        "status" => $order->getStatus(),
-                        "updated_at" => $this->tools->getTime()
+                        "amount" => $order->getSubtotal(),
+                        "payment_method" => $order->getData('base_currency_code'),
+                        "paid_at" => $this->tools->getTime()
                     );
                     $this->saveData->save($payload, StatusPostbacks::PENDDING);
                 } catch(\Exception $e) {
