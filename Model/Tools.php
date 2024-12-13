@@ -14,6 +14,10 @@ use Magento\Customer\Api\CustomerRepositoryInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
 use SmsFunnel\SmsFunnel\Logger\Logger;
 use Magento\Sales\Api\OrderRepositoryInterface;
+use Magento\Framework\Pricing\Helper\Data;
+use Magento\Framework\Locale\CurrencyInterface;
+use Magento\Store\Model\StoreManagerInterface;
+use Magento\Sales\Api\CreditmemoRepositoryInterface;
 
 class Tools
 {
@@ -22,12 +26,20 @@ class Tools
      * @param CustomerRepositoryInterface $customerRepository
      * @param Logger $logger
      * @param OrderRepositoryInterface $orderRepository
+     * @param Data $priceHelper
+     * @param CurrencyInterface $currency
+     * @param StoreManagerInterface $storeManager
+     * @param CreditmemoRepositoryInterface $creditmemoRepository
      */
     public function __construct(
         private TimezoneInterface $timezone,
         private CustomerRepositoryInterface $customerRepository,
         private Logger $logger,
-        private OrderRepositoryInterface $orderRepository
+        private OrderRepositoryInterface $orderRepository,
+        private Data $priceHelper,
+        private CurrencyInterface $currency,
+        private StoreManagerInterface $storeManager,
+        private CreditmemoRepositoryInterface $creditmemoRepository
     ) {}
 
     /**
@@ -62,7 +74,7 @@ class Tools
 
     /**
      * @param int $customerId
-     * @return \Magento\Customer\Api\Data\CustomerInterface|null
+     * @return CustomerRepositoryInterface|null
      */
     public function loadCustomer(int $customerId)
     {
@@ -111,6 +123,10 @@ class Tools
         
     }
 
+    /**
+     * @param string $customerEmail
+     * @return CustomerRepositoryInterface
+     */
     public function loadCustomerByEmail($customerEmail)
     {
         try {
@@ -118,7 +134,38 @@ class Tools
         } catch(\Exception $e) {
             $this->logger->error($e->getMessage());
         }
+    }
+
+    /**
+     * @param string $amount
+     * @param bool $includeContainer
+     * @param int $precision
+     * @return float|string
+     */
+    public function formatPrice($amount)
+    {
+        // return $this->priceHelper->currency($amount, true, false);
+        $store = $this->storeManager->getStore();
+        $currencyCode = $store->getCurrentCurrencyCode();
+
+        return $this->currency->getCurrency($currencyCode)->toCurrency($amount);
+
+    }
+
+    /**
+    * @param string $id
+    * @return string
+     */
+    public function getCreditmemoComments($id)
+    {
+        try {
+            $creditmemoData = $this->creditmemoRepository->get($id);
+            return $creditmemoData->getCustomerNote();
+        } catch (\Exception $e) {
+            $this->logger->error($e->getMessage());
+        }
         
     }
+
 
 }

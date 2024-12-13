@@ -33,4 +33,25 @@
 	<event name="order_cancel_after">
 		<observer name="smsfunnel_smsfunnel_observer_sales_ordercancelafter_sales_order_cancel_after" instance="SmsFunnel\SmsFunnel\Observer\Sales\OrderCancelAfter"/>
 	</event>
+	<event name="sales_order_shipment_save_after">
+		<observer name="smsfunnel_smsfunnel_observer_sales_ordershipmentsaveafter_sales_order_shipment_save_after" instance="SmsFunnel\SmsFunnel\Observer\Sales\OrderShipmentSaveAfter"/>
+	</event>
+	<event name="sales_order_invoice_save_after">
+		<observer name="smsfunnel_smsfunnel_observer_sales_orderinvoicesaveafter_sales_order_invoice_save_after" instance="SmsFunnel\SmsFunnel\Observer\Sales\OrderInvoiceSaveAfter"/>
+	</event>
+	<event name="sales_order_creditmemo_save_after">
+		<observer name="smsfunnel_smsfunnel_observer_sales_ordercreditmemosaveafter_sales_order_creditmemo_save_after" instance="SmsFunnel\SmsFunnel\Observer\Sales\OrderCreditmemoSaveAfter"/>
+	</event>
+	<event name="sales_order_comment_save_after">
+		<observer name="smsfunnel_smsfunnel_observer_sales_ordercommentsaveafter_sales_order_comment_save_after" instance="SmsFunnel\SmsFunnel\Observer\Sales\OrderCommentSaveAfter"/>
+	</event>
+	<event name="sales_order_invoice_register">
+		<observer name="smsfunnel_smsfunnel_observer_sales_orderinvoiceregister_sales_order_invoice_register" instance="SmsFunnel\SmsFunnel\Observer\Sales\OrderInvoiceRegister"/>
+	</event>
+	<event name="sales_order_invoice_pay">
+		<observer name="smsfunnel_smsfunnel_observer_sales_orderinvoicepay_sales_order_invoice_pay" instance="SmsFunnel\SmsFunnel\Observer\Sales\OrderInvoicePay"/>
+	</event>
+	<event name="sales_order_invoice_cancel">
+		<observer name="smsfunnel_smsfunnel_observer_sales_orderinvoicecancel_sales_order_invoice_cancel" instance="SmsFunnel\SmsFunnel\Observer\Sales\OrderInvoiceCancel"/>
+	</event>
 </config>
