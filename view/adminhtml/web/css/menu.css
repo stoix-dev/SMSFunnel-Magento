@@ -1,0 +1,11 @@
+.admin__menu .item-smsfunnel.level-0 > a:before {
+    content: url('../images/facilisys.svg');
+    height: 28px;
+    margin: 0 auto;
+    width: 30px;
+    opacity: 0.6;
+}
+
+.admin__menu .item-smsfunnel.level-0 > a:before {
+    opacity: 1;
+}

@@ -50,6 +50,7 @@ class Logout implements ObserverInterface
             $customerData = array(
                 "event" => "customer_logout",
                 "customer_id" => $customer->getId(),
+                "customer_name" => $customer->getFirstname() . ' ' . $customer->getLastname(),
                 "email" =>  $customer->getEmail(),
                 "phone" => $this->tools->getPhone($customer),
                 "login_at" => $this->tools->getTime()

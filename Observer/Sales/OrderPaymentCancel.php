@@ -55,6 +55,7 @@ class OrderPaymentCancel implements ObserverInterface
                         "event" => "sales_order_payment_cancel",
                         "order_id" => $order->getIncrementId(),
                         "customer_id" => $customer->getId(),
+                        "customer_name" => $customer->getFirstname() . ' ' . $customer->getLastname(),
                         "email" =>  $customer->getEmail(),
                         "phone" => $this->tools->getPhone($customer),
                         "canceled_at" => $this->tools->getTime()

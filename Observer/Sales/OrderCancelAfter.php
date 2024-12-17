@@ -55,6 +55,7 @@ class OrderCancelAfter implements ObserverInterface
                         "event" => "order_cancel_after",
                         "order_id" => $order->getIncrementId(),
                         "customer_id" => $customer->getId(),
+                        "customer_name" => $customer->getFirstname() . ' ' . $customer->getLastname(),
                         "email" =>  $customer->getEmail(),
                         "phone" => $this->tools->getPhone($customer),
                         "canceled_reason" => "",

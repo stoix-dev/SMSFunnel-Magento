@@ -7,7 +7,7 @@
 		<section id="smsfunnel" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
 			<label>Notifications configuration</label>
 			<tab>smsfunnel</tab>
-			<resource>SmsFunnel_SmsFunnel::config_facilisys_smsfunnel</resource>
+			<resource>SmsFunnel_SmsFunnel::config_smsfunnel_smsfunnel</resource>
 			<group id="smsfunnel" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
 				<label>SMSFunnel</label>
 				<field id="active_integration" type="select" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">

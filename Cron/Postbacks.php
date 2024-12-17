@@ -15,6 +15,7 @@ use SmsFunnel\SmsFunnel\Model\Postbacks as Postback;
 use SmsFunnel\SmsFunnel\Model\SaveData;
 use SmsFunnel\SmsFunnel\Model\SendData;
 use SmsFunnel\SmsFunnel\Model\StatusPostbacks;
+use SmsFunnel\SmsFunnel\Api\SystemInterface;
 
 class Postbacks
 {
@@ -24,13 +25,15 @@ class Postbacks
      * @param Postbacks $postback
      * @param SaveData $saveData
      * @param SendData $sendata;
+     * @param SystemInterface $systemInterface
      */
     public function __construct(
         private Logger $logger,
         private CollectionFactory $postbacksCollectionFactory,
         private Postback $postback,
         private SaveData $saveData,
-        private SendData $sendData
+        private SendData $sendData,
+        private SystemInterface $systemInterface
     ) {}
 
     /**
@@ -40,55 +43,58 @@ class Postbacks
      */
     public function execute(): void
     {
-        try {
-            $collection = $this->getPostbacksCollection();
-            foreach ($collection as $item)
-            {
-                $id = $item->getEntityId();
-                $customerData = $item->getJsonData();
-                
-                $attempts = (int)$item->getAttempts() + 1;
+        if ($this->systemInterface->getEnable())
+        {
+            try {
+                $collection = $this->getPostbacksCollection();
+                foreach ($collection as $item)
+                {
+                    $id = $item->getEntityId();
+                    $customerData = $item->getJsonData();
+                    
+                    $attempts = (int)$item->getAttempts() + 1;
+                    $this->saveData->updateStatus(
+                        $id,
+                        $attempts,
+                        StatusPostbacks::PROCESSING
+                    );
+                    
+                    $result = $this->sendData->doRequest(
+                        $customerData,
+                        "POST"
+                    );
+
+                    if ($result->getStatusCode() == 200)
+                    {
+                        $this->saveData->updateStatus(
+                            $id,
+                            $attempts,
+                            StatusPostbacks::SUCCESS
+                        );
+                    }
+
+                    if ($result->getStatusCode() != 200)
+                    {
+                        $this->saveData->updateStatus(
+                            $id,
+                            $attempts,
+                            StatusPostbacks::FAIL
+                        );
+                        $this->logger->error('======================');
+                        $this->logger->error(print_r($result->getStatusCode(), true));
+                        $this->logger->error('======================');
+                    }
+                }
+            } catch (\Exception $e) {
+                $this->logger->error('-------------------------------');
+                $this->logger->error(print_r($e->getMessage(), true));
+                $this->logger->error('-------------------------------');
                 $this->saveData->updateStatus(
                     $id,
                     $attempts,
-                    StatusPostbacks::PROCESSING
+                    StatusPostbacks::FAIL
                 );
-                
-                $result = $this->sendData->doRequest(
-                    $customerData,
-                    "POST"
-                );
-
-                if ($result->getStatusCode() == 200)
-                {
-                    $this->saveData->updateStatus(
-                        $id,
-                        $attempts,
-                        StatusPostbacks::SUCCESS
-                    );
-                }
-
-                if ($result->getStatusCode() != 200)
-                {
-                    $this->saveData->updateStatus(
-                        $id,
-                        $attempts,
-                        StatusPostbacks::FAIL
-                    );
-                    $this->logger->error('======================');
-                    $this->logger->error(print_r($result->getStatusCode(), true));
-                    $this->logger->error('======================');
-                }
             }
-        } catch (\Exception $e) {
-            $this->logger->error('-------------------------------');
-            $this->logger->error(print_r($e->getMessage(), true));
-            $this->logger->error('-------------------------------');
-            $this->saveData->updateStatus(
-                $id,
-                $attempts,
-                StatusPostbacks::FAIL
-            );
         }
     }
 

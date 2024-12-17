@@ -57,6 +57,7 @@ class OrderSaveAfter implements ObserverInterface
                         "event" => "sales_order_save_after",
                         "order_id" => $order->getIncrementId(),
                         "customer_id" => $order->getCustomerId(),
+                        "customer_name" => $customer->getFirstname() . ' ' . $customer->getLastname(),
                         "email" =>  $customer->getEmail(),
                         "phone" => $this->tools->getPhone($customer),
                         "status" => $order->getStatus(),

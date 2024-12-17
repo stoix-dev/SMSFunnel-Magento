@@ -4,5 +4,8 @@
 		<job name="smsfunnel_postbacks_add" instance="SmsFunnel\SmsFunnel\Cron\Postbacks" method="execute">
 			<schedule>*/5 * * * *</schedule>
 		</job>
+		<job name="smsfunnel_clear_queue" instance="SmsFunnel\SmsFunnel\Cron\Clearqueue" method="execute">
+			<schedule>0 * * * *</schedule>
+		</job>
 	</group>
 </config>

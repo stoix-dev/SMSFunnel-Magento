@@ -3,7 +3,6 @@
     <menu>
         <add id="SmsFunnel_SmsFunnel::smsfunnel" title="SMSFunnel" module="SmsFunnel_SmsFunnel" sortOrder="10" resource="SmsFunnel_SmsFunnel::smsfunnel"/>
         <add id="SmsFunnel_SmsFunnel::smsfunnel_configuration" title="Notifications configuration" module="SmsFunnel_SmsFunnel" resource="SmsFunnel_SmsFunnel::config_smsfunnel_smsfunnel" parent="SmsFunnel_SmsFunnel::smsfunnel" action="admin/system_config/edit/section/smsfunnel"/>
-        <!-- <add id="SmsFunnel::top_level" title="SmsFunnel" module="SmsFunnel_SmsFunnel" sortOrder="9999" resource="Magento_Backend::content"/> -->
 		<add id="SmsFunnel_SmsFunnel::smsfunnel_smsfunnel_postbacks" title="postbacks" module="SmsFunnel_SmsFunnel" sortOrder="20" resource="Magento_Backend::content" parent="SmsFunnel_SmsFunnel::smsfunnel" action="smsfunnel_smsfunnel/postbacks/index"/>
     </menu>
 </config>

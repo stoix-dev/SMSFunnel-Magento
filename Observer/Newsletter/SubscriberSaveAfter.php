@@ -53,6 +53,7 @@ class SubscriberSaveAfter implements ObserverInterface
             $customerData = array(
                 "event" => "newsletter_subscriber_save_after",
                 "customer_id" => $customer->getId(),
+                "customer_name" => $customer->getFirstname() . ' ' . $customer->getLastname(),
                 "email" =>  $customer->getEmail(),
                 "phone" => $this->tools->getPhone($customer),
                 "subscribed_at" => $this->tools->getTime()

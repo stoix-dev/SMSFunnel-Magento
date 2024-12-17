@@ -50,6 +50,7 @@ class DeleteAfter implements ObserverInterface
             $customerData = array(
                 "event" => "customer_delete_after",
                 "customer_id" => $customer->getId(),
+                "customer_name" => $customer->getFirstname() . ' ' . $customer->getLastname(),
                 "email" =>  $customer->getEmail(),
                 "phone" => $customer->getData('phone'),
                 "deleted_at" => $this->tools->getTime()

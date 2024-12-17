@@ -57,6 +57,7 @@ class OrderPlaceAfter implements ObserverInterface
                         "event" => "sales_order_place_after",
                         "order_id" => $order->getIncrementId(),
                         "customer_id" => $order->getCustomerId(),
+                        "customer_name" => $customer->getFirstname() . ' ' . $customer->getLastname(),
                         "email" =>  $customer->getEmail(),
                         "phone" => $this->tools->getPhone($customer),
                         "total" => $order->getGrandTotal(),

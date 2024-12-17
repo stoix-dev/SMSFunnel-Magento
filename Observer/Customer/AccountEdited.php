@@ -50,6 +50,7 @@ class AccountEdited implements ObserverInterface
             $customerData = array(
                 "event" => "customer_account_edited",
                 "customer_id" => $customer->getId(),
+                "customer_name" => $customer->getFirstname() . ' ' . $customer->getLastname(),
                 "email" =>  $customer->getEmail(),
                 "phone" => $this->tools->getPhone($customer),
                 "changes" => array(
