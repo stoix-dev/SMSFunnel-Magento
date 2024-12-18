@@ -81,6 +81,7 @@ class Postbacks
                             StatusPostbacks::FAIL
                         );
                         $this->logger->error('======================');
+                        $this->logger->error('id: ' . $id);
                         $this->logger->error(print_r($result->getStatusCode(), true));
                         $this->logger->error('======================');
                     }
@@ -101,7 +102,9 @@ class Postbacks
     public function getPostbacksCollection()
     {
         $collection = $this->postbacksCollectionFactory->create();
-        $collection->addFieldToSelect('*');
+        $collection->addFieldToSelect('*')
+        ->setPageSize(30)
+        ->setCurPage(1);
         $collection->addFieldToFilter('status', ['in' => ['pendding','fail']]);
         $collection->addFieldToFilter('attempts', ['lt' => 3]);
         $collection->load();

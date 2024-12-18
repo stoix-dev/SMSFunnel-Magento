@@ -51,7 +51,7 @@ class SaveData
     {
         $postbackData = $this->loadPostback($id);
 
-        if ($postbackData->getCustomerId())
+        if ($postbackData->getEntityId())
         {
             try {
                 $this->postbacks->setStatus($status->value);
@@ -62,7 +62,6 @@ class SaveData
             }
         }
     }
-
 
     private function loadPostback($id)
     {

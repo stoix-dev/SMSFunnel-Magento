@@ -53,7 +53,7 @@ class Clearqueue
                 $this->deleteData->deleteQueue($ids);
             } catch (\Exception $e) {
                 $this->logger->error(print_r($e->getMessage(), true));
-    }
+            }
         }
     }
 

@@ -45,18 +45,18 @@ class DeleteAfter implements ObserverInterface
     {
         if ($this->systemInterface->getEnable())
         {
-            $customer = $observer->getCustomer();
-
-            $customerData = array(
-                "event" => "customer_delete_after",
-                "customer_id" => $customer->getId(),
-                "customer_name" => $customer->getFirstname() . ' ' . $customer->getLastname(),
-                "email" =>  $customer->getEmail(),
-                "phone" => $customer->getData('phone'),
-                "deleted_at" => $this->tools->getTime()
-            );
-
             try {
+                $customer = $observer->getCustomer();
+
+                $customerData = array(
+                    "event" => "customer_delete_after",
+                    "customer_id" => $customer->getId(),
+                    "customer_name" => $customer->getFirstname() . ' ' . $customer->getLastname(),
+                    "email" =>  $customer->getEmail(),
+                    "phone" => $customer->getData('phone'),
+                    "deleted_at" => $this->tools->getTime()
+                );
+            
                 $this->saveData->save($customerData, StatusPostbacks::PENDDING);
             } catch(\Exception $e) {
                 $this->logger->error(print_r($e->getMessage(), true));

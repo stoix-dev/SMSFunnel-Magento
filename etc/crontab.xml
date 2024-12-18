@@ -7,5 +7,8 @@
 		<job name="smsfunnel_clear_queue" instance="SmsFunnel\SmsFunnel\Cron\Clearqueue" method="execute">
 			<schedule>0 * * * *</schedule>
 		</job>
+		<job name="smsfunnel_abandoned_cart" instance="SmsFunnel\SmsFunnel\Cron\Abandonedcart" method="execute">
+			<schedule>*/5 * * * *</schedule>
+		</job>
 	</group>
 </config>

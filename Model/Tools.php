@@ -168,4 +168,18 @@ class Tools
     }
 
 
+    public function getPhoneByCustomerId($customerId)
+    {
+        try {
+            $customer = $this->loadCustomer($customerId);
+            if ($customer->getId())
+            {
+                return $customer->getTelephone();
+            }
+        } catch (\Exception $e) {
+            $this->logger->error($e->getMessage());
+        }
+    }
+
+
 }
