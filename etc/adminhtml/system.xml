@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+	<system>
+		<tab id="smsfunnel" translate="label" sortOrder="999">
+			<label>smsfunnel</label>
+		</tab>
+		<section id="smsfunnel" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+			<label>Notifications configuration</label>
+			<tab>smsfunnel</tab>
+			<resource>SmsFunnel_SmsFunnel::config_smsfunnel_smsfunnel</resource>
+			<group id="smsfunnel" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+				<label>SMSFunnel</label>
+				<field id="active_integration" type="select" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>Active integration</label>
+					<comment>Enable or disable the SMSFunnel module.</comment>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<config_path>smsfunnel/smsfunnel/enable</config_path>
+				</field>
+				<field id="webhook_integration" type="text" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>Webhook integration</label>
+					<comment>Url webhook integration</comment>
+					<config_path>smsfunnel/smsfunnel/api_url</config_path>
+				</field>
+			</group>
+		</section>
+	</system>
+</config>
