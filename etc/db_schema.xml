@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="smsfunnel_postbacks_queue" resource="default" engine="innodb" comment="Postbacks Queue Table">
+        <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true" comment="Entity ID" />
+        <column xsi:type="int" name="customer_id" unsigned="true" nullable="false" comment="Customer ID" />
+        <column xsi:type="varchar" name="customer_email" nullable="true" length="255" comment="Customer Email" />
+        <column xsi:type="json" name="json_data" nullable="true" comment="JSON Data" />
+        <column xsi:type="int" name="attempts" nullable="true" default="0" comment="Attempts" />
+        <column xsi:type="varchar" name="status" nullable="false" length="15" comment="Status" />
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At" />
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP" comment="Updated At" />
+
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id" />
+        </constraint>
+
+        <index referenceId="SMSFUNNEL_POSTBACKS_QUEUE_CUSTOMER_ID" indexType="btree">
+            <column name="customer_id"/>
+        </index>
+    </table>
+</schema>

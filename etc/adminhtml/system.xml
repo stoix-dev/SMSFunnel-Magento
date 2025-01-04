@@ -1,0 +1,55 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+	<system>
+		<tab id="smsfunnel" translate="label" sortOrder="999">
+			<label>smsfunnel</label>
+		</tab>
+		<section id="smsfunnel" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+			<label>Notifications configuration</label>
+			<tab>smsfunnel</tab>
+			<resource>SmsFunnel_SmsFunnel::config_smsfunnel_smsfunnel</resource>
+			<group id="smsfunnel" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+				<label>SMSFunnel</label>
+				<field id="active_integration" type="select" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>Active integration</label>
+					<comment>Enable or disable the SMSFunnel module.</comment>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<config_path>smsfunnel/smsfunnel/enable</config_path>
+				</field>
+				<field id="webhook_integration" type="text" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>Webhook integration</label>
+					<comment>Url webhook integration</comment>
+					<config_path>smsfunnel/smsfunnel/api_url</config_path>
+				</field>
+			</group>
+			<group id="parameters" sortOrder="20" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+				<label>Parameterization</label>
+				<field id="post_integration_number" type="text" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>Number items post</label>
+					<comment>Number of integration items per post</comment>
+					<config_path>smsfunnel/parameters/post_integration_number</config_path>
+				</field>
+				<field id="attempts" type="text" sortOrder="30" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>Number of attempted</label>
+					<comment>Number of attempted posts</comment>
+					<config_path>smsfunnel/parameters/attempts</config_path>
+				</field>
+				<field id="garbage_collector_time" type="text" sortOrder="40" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>Garbage Collector Time</label>
+					<comment>Garbage collector time in minutes</comment>
+					<config_path>smsfunnel/parameters/garbagecollector_time</config_path>
+				</field>
+				<field id="clear_postback_items" type="text" sortOrder="60" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>Clear postback items</label>
+					<comment>Days to clear postback items on grid</comment>
+					<config_path>smsfunnel/parameters/clear_postback_grid</config_path>
+				</field>
+				<field id="clear_postback_logs" type="text" sortOrder="60" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>Clear postback logs</label>
+					<comment>Days to clear postback logs</comment>
+					<config_path>smsfunnel/parameters/clear_postback_logs</config_path>
+				</field>
+			</group>
+		</section>
+	</system>
+</config>

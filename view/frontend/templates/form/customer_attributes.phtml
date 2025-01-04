@@ -1,0 +1,28 @@
+<?php
+/**
+ * SMSFunnel
+ *
+ * @category  SMSFunnel
+ * @package   SMSFunnel_SMSFunnel
+ * @author    SMSFunnel
+ * @copyright SMSFunnel
+ */
+
+$customerData = $block->getCustomerData();
+$phone = $customerData["phone"] ?? "";
+
+?>
+<div class="field phone required">
+    <label class="label" for="Phone">
+        <span><?= /** @noEscape */ __('Phone'); ?></span>
+    </label>
+    <div class="control">
+        <input type="text" name="phone" id="phone"
+               title="<?= /** @noEscape */ __('Phone');?>"
+               class="input-text required-entry"
+               maxlength="12"
+               value="<?= /* @noEscape */ $phone ?>"
+               data-validate="{required:true}"
+               required>
+    </div>
+</div>

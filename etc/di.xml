@@ -1,0 +1,39 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+	<preference for="SmsFunnel\SmsFunnel\Api\SystemInterface" type="SmsFunnel\SmsFunnel\Model\System" />
+    <preference for="SmsFunnel\SmsFunnel\Api\PostbacksRepositoryInterface" type="SmsFunnel\SmsFunnel\Model\PostbacksRepository"/>
+	<preference for="SmsFunnel\SmsFunnel\Api\Data\PostbacksInterface" type="SmsFunnel\SmsFunnel\Model\Postbacks"/>
+	<preference for="SmsFunnel\SmsFunnel\Api\Data\PostbacksSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+	<virtualType name="SmsFunnel\SmsFunnel\Model\ResourceModel\Postbacks\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+		<arguments>
+			<argument name="mainTable" xsi:type="string">smsfunnel_postbacks_queue</argument>
+			<argument name="resourceModel" xsi:type="string">SmsFunnel\SmsFunnel\Model\ResourceModel\Postbacks\Collection</argument>
+		</arguments>
+	</virtualType>
+	<type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+		<arguments>
+			<argument name="collections" xsi:type="array">
+				<item name="smsfunnel_smsfunnel_postbacks_listing_data_source" xsi:type="string">SmsFunnel\SmsFunnel\Model\ResourceModel\Postbacks\Grid\Collection</item>
+			</argument>
+		</arguments>
+	</type>
+	<type name="SmsFunnel\SmsFunnel\Logger\Handler">
+       <arguments>
+			<argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
+       </arguments>
+	</type>
+	<type name="SmsFunnel\SmsFunnel\Logger\Logger">
+		<arguments>
+			<argument name="name" xsi:type="string">SmsFunnel</argument>
+			<argument name="handlers"  xsi:type="array">
+				<item name="system" xsi:type="object">SmsFunnel\SmsFunnel\Logger\Handler</item>
+			</argument>
+		</arguments>
+	</type>
+	<type name="Magento\Sales\Controller\Adminhtml\Order\AddComment">
+		<plugin name="SmsFunnel_SmsFunnel_Plugin_Magento_Sales_Controller_Adminhtml_Order_AddComment" type="SmsFunnel\SmsFunnel\Plugin\Magento\Sales\Controller\Adminhtml\Order\AddComment" sortOrder="10" disabled="false"/>
+	</type>
+	<type name="Magento\Sales\Model\Order\Shipment">
+		<plugin name="SmsFunnel_SmsFunnel_Plugin_Magento_Sales_Model_Order_Shipment" type="SmsFunnel\SmsFunnel\Plugin\Magento\Sales\Model\Order\Shipment" sortOrder="10" disabled="false"/>
+	</type>
+</config>

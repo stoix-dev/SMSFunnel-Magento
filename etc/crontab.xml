@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+	<group id="default">
+		<job name="smsfunnel_postbacks_add" instance="SmsFunnel\SmsFunnel\Cron\Postbacks" method="execute">
+			<schedule>*/1 * * * *</schedule>
+		</job>
+		<job name="smsfunnel_clear_queue" instance="SmsFunnel\SmsFunnel\Cron\Clearqueue" method="execute">
+			<schedule>0 * * * *</schedule>
+		</job>
+		<job name="smsfunnel_abandoned_cart" instance="SmsFunnel\SmsFunnel\Cron\Abandonedcart" method="execute">
+			<schedule>*/1 * * * *</schedule>
+		</job>
+		<job name="smsfunnel_postbacks_garbagecollector" instance="SmsFunnel\SmsFunnel\Cron\Garbagecollector" method="execute">
+			<schedule>*/1 * * * *</schedule>
+		</job>
+		<job name="smsfunnel_clearlogs_post_backs" instance="SmsFunnel\SmsFunnel\Cron\ClearLogsPostbacks" method="execute">
+			<schedule>* 11,23 * * *</schedule>
+		</job>
+	</group>
+</config>

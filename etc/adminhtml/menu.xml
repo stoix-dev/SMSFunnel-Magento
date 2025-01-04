@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="SmsFunnel_SmsFunnel::smsfunnel" title="SMSFunnel" module="SmsFunnel_SmsFunnel" sortOrder="10" resource="SmsFunnel_SmsFunnel::smsfunnel"/>
+        <add id="SmsFunnel_SmsFunnel::smsfunnel_configuration" title="Notifications configuration" module="SmsFunnel_SmsFunnel" resource="SmsFunnel_SmsFunnel::config_smsfunnel_smsfunnel" parent="SmsFunnel_SmsFunnel::smsfunnel" action="admin/system_config/edit/section/smsfunnel"/>
+		<add id="SmsFunnel_SmsFunnel::smsfunnel_smsfunnel_postbacks" title="Postbacks" module="SmsFunnel_SmsFunnel" sortOrder="20" resource="Magento_Backend::content" parent="SmsFunnel_SmsFunnel::smsfunnel" action="smsfunnel_smsfunnel/postbacks/index"/>
+    </menu>
+</config>

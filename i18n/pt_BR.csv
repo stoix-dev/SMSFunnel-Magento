@@ -1,0 +1,31 @@
+"Additional Information","Informações Adicionais"
+postbacks,postbacks
+"Could not save the postbacks: %1","Não foi possível salvar os postbacks: %1"
+"postbacks with id ""%1"" does not exist.","os postbacks com id ""%1"" não existem."
+"Could not delete the postbacks: %1","Não foi possível deletar os postbacks: %1"
+Phone,Telefone
+"Additional Settings","Configurações Adicionais"
+smsfunnel,smsfunnel
+"Notifications configuration","Configuração de Notificações"
+SMSFunnel,SMSFunnel
+"Active integration","Ativar Integração"
+"Webhook integration","Integração de Webhook"
+ID,ID
+customer_id,cliente_id
+customer_email,email_cliente
+json_data,dados_json
+attempts,tentativas
+status,status
+created_at,criado_em
+updated_at,atualizado_em
+Parameterization,"Parametrização"
+"Number items post","Número de itens postados"
+"Number of integration items per post","Número de itens de integração por publicação"
+"Number of attempted","Número de tentativas"
+"Garbage Collector Time","Tempo do coletor de lixo"
+"Garbage collector time in minutes","Tempo de coleta de lixo em minutos"
+"Number of attempted posts","Número de tentativas de publicação"
+"Clear postback logs","Limpar logs de Postbacks"
+"Days to clear postback logs","Dias para limpar logs de postback"
+"Clear postback items","Limpar itens de postback"
+"Days to clear postback items on grid","Dias para limpar itens de postback na grid"

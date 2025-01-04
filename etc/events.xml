@@ -1,0 +1,57 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+	<event name="customer_register_success">
+		<observer name="smsfunnel_smsfunnel_observer_customer_registersuccess_customer_register_success" instance="SmsFunnel\SmsFunnel\Observer\Customer\RegisterSuccess"/>
+	</event>
+	<event name="customer_login">
+		<observer name="smsfunnel_smsfunnel_observer_customer_login_customer_login" instance="SmsFunnel\SmsFunnel\Observer\Customer\Login"/>
+	</event>
+	<event name="customer_logout">
+		<observer name="smsfunnel_smsfunnel_observer_customer_logout_customer_logout" instance="SmsFunnel\SmsFunnel\Observer\Customer\Logout"/>
+	</event>
+	<event name="customer_account_edited">
+		<observer name="smsfunnel_smsfunnel_observer_customer_accountedited_customer_account_edited" instance="SmsFunnel\SmsFunnel\Observer\Customer\AccountEdited"/>
+	</event>
+	<event name="customer_delete_after">
+		<observer name="smsfunnel_smsfunnel_observer_customer_deleteafter_customer_delete_after" instance="SmsFunnel\SmsFunnel\Observer\Customer\DeleteAfter"/>
+	</event>
+	<event name="newsletter_subscriber_save_after">
+		<observer name="smsfunnel_smsfunnel_observer_newsletter_subscribersaveafter_newsletter_subscriber_save_after" instance="SmsFunnel\SmsFunnel\Observer\Newsletter\SubscriberSaveAfter"/>
+	</event>
+	<event name="sales_order_place_after">
+		<observer name="smsfunnel_smsfunnel_observer_sales_orderplaceafter_sales_order_place_after" instance="SmsFunnel\SmsFunnel\Observer\Sales\OrderPlaceAfter"/>
+	</event>
+	<event name="sales_order_save_after">
+		<observer name="smsfunnel_smsfunnel_observer_sales_ordersaveafter_sales_order_save_after" instance="SmsFunnel\SmsFunnel\Observer\Sales\OrderSaveAfter"/>
+	</event>
+	<event name="sales_order_payment_pay">
+		<observer name="smsfunnel_smsfunnel_observer_sales_orderpaymentpay_sales_order_payment_pay" instance="SmsFunnel\SmsFunnel\Observer\Sales\OrderPaymentPay"/>
+	</event>
+	<event name="sales_order_payment_cancel">
+		<observer name="smsfunnel_smsfunnel_observer_sales_orderpaymentcancel_sales_order_payment_cancel" instance="SmsFunnel\SmsFunnel\Observer\Sales\OrderPaymentCancel"/>
+	</event>
+	<event name="order_cancel_after">
+		<observer name="smsfunnel_smsfunnel_observer_sales_ordercancelafter_sales_order_cancel_after" instance="SmsFunnel\SmsFunnel\Observer\Sales\OrderCancelAfter"/>
+	</event>
+	<event name="sales_order_shipment_save_after">
+		<observer name="smsfunnel_smsfunnel_observer_sales_ordershipmentsaveafter_sales_order_shipment_save_after" instance="SmsFunnel\SmsFunnel\Observer\Sales\OrderShipmentSaveAfter"/>
+	</event>
+	<event name="sales_order_invoice_save_after">
+		<observer name="smsfunnel_smsfunnel_observer_sales_orderinvoicesaveafter_sales_order_invoice_save_after" instance="SmsFunnel\SmsFunnel\Observer\Sales\OrderInvoiceSaveAfter"/>
+	</event>
+	<event name="sales_order_creditmemo_save_after">
+		<observer name="smsfunnel_smsfunnel_observer_sales_ordercreditmemosaveafter_sales_order_creditmemo_save_after" instance="SmsFunnel\SmsFunnel\Observer\Sales\OrderCreditmemoSaveAfter"/>
+	</event>
+	<event name="sales_order_comment_save_after">
+		<observer name="smsfunnel_smsfunnel_observer_sales_ordercommentsaveafter_sales_order_comment_save_after" instance="SmsFunnel\SmsFunnel\Observer\Sales\OrderCommentSaveAfter"/>
+	</event>
+	<event name="sales_order_invoice_register">
+		<observer name="smsfunnel_smsfunnel_observer_sales_orderinvoiceregister_sales_order_invoice_register" instance="SmsFunnel\SmsFunnel\Observer\Sales\OrderInvoiceRegister"/>
+	</event>
+	<event name="sales_order_invoice_pay">
+		<observer name="smsfunnel_smsfunnel_observer_sales_orderinvoicepay_sales_order_invoice_pay" instance="SmsFunnel\SmsFunnel\Observer\Sales\OrderInvoicePay"/>
+	</event>
+	<event name="sales_order_invoice_cancel">
+		<observer name="smsfunnel_smsfunnel_observer_sales_orderinvoicecancel_sales_order_invoice_cancel" instance="SmsFunnel\SmsFunnel\Observer\Sales\OrderInvoiceCancel"/>
+	</event>
+</config>

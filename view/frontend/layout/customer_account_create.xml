@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author SMSFunnel
+ * @copyright Copyright (c) 2024 SMSFUnnel
+ * @package SmsFunnel_SmsFunnel
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="form.additional.info">
+            <block class="SmsFunnel\SmsFunnel\Block\Customer\Form\CustomerAttributes" name="attributes_customer_register" template="SmsFunnel_SmsFunnel::form/customer_attributes.phtml" cacheable="false"/>
+        </referenceContainer>
+    </body>
+</page>
