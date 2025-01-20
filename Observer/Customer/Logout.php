@@ -4,6 +4,7 @@
 * @category SMSFunnel
 * @copyright Copyright (c) 2024 SMSFUNNEL - Magento Solution Partner.
 * @author SMSFunnel
+* @Support Leonardo Menezes - suporte@smsfunnel.com.br
 */
 declare(strict_types=1);
 
@@ -52,7 +53,7 @@ class Logout implements ObserverInterface
                 "customer_id" => $customer->getId(),
                 "customer_name" => $customer->getFirstname() . ' ' . $customer->getLastname(),
                 "email" =>  $customer->getEmail(),
-                "phone" => $this->tools->getPhone($customer),
+                "phone" => $customer->getData('phone'),
                 "login_at" => $this->tools->getTime()
             );
 

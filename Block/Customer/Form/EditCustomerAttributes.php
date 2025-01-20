@@ -23,7 +23,7 @@ use Magento\Catalog\Block\Adminhtml\Form;
 use Magento\Customer\Model\Session;
 use Magento\Framework\DataObjectFactory;
 
-class CustomerAttributes extends Form
+class EditCustomerAttributes extends Form
 {
     /**
      * @var StoreManagerInterface
@@ -110,14 +110,15 @@ class CustomerAttributes extends Form
      */
     public function isAttributeVisibleOnFront(Attribute $attribute)
     {
-        return $attribute->getIsVisible();
+        $isVisibleOnFront = $attribute->getData('is_system');
+        return (!$isVisibleOnFront && $attribute->getIsVisible());
     }
 
     protected function _prepareForm()
     {
         /** @var \Magento\Framework\Data\Form $form */
         $form = $this->_formFactory->create();
-        $type = 'customer_attributes_registration';
+        $type = 'customer_account_edit';
 
         $attributes = $this->attributeMetadataDataProvider->loadAttributesCollection(
             'customer',
@@ -202,7 +203,7 @@ class CustomerAttributes extends Form
                     'required' => $attribute->getIsRequired() || $attribute->getRequiredOnFront(),
                     'note' => $attribute->getNote()
                 ];
-               
+                
                 $element = $fieldset->addField(
                     $attribute->getAttributeCode(),
                     $fieldType,
@@ -250,14 +251,13 @@ class CustomerAttributes extends Form
         if (empty($attributeIds)) {
             return;
         }
-       
         //you can add array options dynamically as per your need
         $depends[] = [
             'parent_option_id' => 1,
             'depend_attribute_id' => 162,
             'depend_attribute_code' => 'phone'
         ];
-      
+        
         if (!empty($depends)) {
             $fieldset->setData('depends', $depends);
         }

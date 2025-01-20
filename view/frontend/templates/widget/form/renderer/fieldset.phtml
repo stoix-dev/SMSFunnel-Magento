@@ -4,6 +4,7 @@
 * @category SMSFunnel
 * @copyright Copyright (c) 2024 SMSFUNNEL - Magento Solution Partner.
 * @author SMSFunnel
+* @Support Leonardo Menezes - suporte@smsfunnel.com.br
 */
 ?>
 <?php
@@ -29,13 +30,6 @@
         $cssClass .= ($element->hasAdvanced()) ? ' complex' : '';
     }
 ?>
-
-<?php
-/**
- * @todo investigate situations, when the following is needed:
- * echo $element->getHeaderBar();
- * echo $element->getSubFieldsetHtml();
- */ ?>
 
 <?php if ($isWrapped): ?>
 <div class="fieldset-wrapper <?php echo ($isCollapsable) ? 'admin__collapsible-block-wrapper ' : ''; ?>"
@@ -162,7 +156,7 @@
         if ($(currentBeforeSelector).length) {
             if ($(currentBeforeSelector).before($('#group-fields-customer-attributes').show())) {
                 <?php if ($block->getRelationJson()) : ?>
-                // execute relations after block is pasted
+                
                 relation.init(<?php echo $block->getRelationJson() ?>);
                 <?php endif; ?>
             }

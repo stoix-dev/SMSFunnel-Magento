@@ -4,6 +4,7 @@
 * @category SMSFunnel
 * @copyright Copyright (c) 2024 SMSFUNNEL - Magento Solution Partner.
 * @author SMSFunnel
+* @Support Leonardo Menezes - suporte@smsfunnel.com.br
 */
 declare(strict_types=1);
 
@@ -37,6 +38,7 @@ class OrderSaveAfter implements ObserverInterface
         private Tools $tools,
         private CustomerRepositoryInterface $customerRepository
     ) {}
+
     
     /**
      * Execute observer
@@ -51,19 +53,29 @@ class OrderSaveAfter implements ObserverInterface
             try {
                 try {
                     $order = $observer->getOrder();
-                    $customer = $this->tools->loadCustomerByEmail($order->getCustomerEmail());
+                    $newStatus = $order->getStatus();
+
+                    if (in_array($newStatus, ['processing'])) {
+                        $event = [
+                            "pending" => "sales_order_place_after",
+                            "processing" => "sales_order_payment_confirmed"
+                        ];
+
+                        $customer = $this->tools->loadCustomerByEmail($order->getCustomerEmail());
+                        
+                        $payload = array(
+                            "event" => $event = $event[$newStatus],
+                            "order_id" => $order->getIncrementId(),
+                            "customer_id" => $order->getCustomerId(),
+                            "customer_name" => $customer->getFirstname() . ' ' . $customer->getLastname(),
+                            "email" =>  $customer->getEmail(),
+                            "phone" => $this->tools->getPhone($customer),
+                            "status" => $order->getStatus(),
+                            "updated_at" => $this->tools->getTime()
+                        );
+                        $this->saveData->save($payload, StatusPostbacks::PENDDING);
+                    }
                     
-                    $payload = array(
-                        "event" => "sales_order_save_after",
-                        "order_id" => $order->getIncrementId(),
-                        "customer_id" => $order->getCustomerId(),
-                        "customer_name" => $customer->getFirstname() . ' ' . $customer->getLastname(),
-                        "email" =>  $customer->getEmail(),
-                        "phone" => $this->tools->getPhone($customer),
-                        "status" => $order->getStatus(),
-                        "updated_at" => $this->tools->getTime()
-                    );
-                    $this->saveData->save($payload, StatusPostbacks::PENDDING);
                 } catch(\Exception $e) {
                     $this->logger->error(print_r($e->getMessage(), true));
                 }

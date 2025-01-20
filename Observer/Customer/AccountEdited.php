@@ -4,6 +4,7 @@
 * @category SMSFunnel
 * @copyright Copyright (c) 2024 SMSFUNNEL - Magento Solution Partner.
 * @author SMSFunnel
+* @Support Leonardo Menezes - suporte@smsfunnel.com.br
 */
 declare(strict_types=1);
 
@@ -45,24 +46,23 @@ class AccountEdited implements ObserverInterface
     {
         if ($this->systemInterface->getEnable())
         {
-            $customer = $observer->getCustomer();
-            
-            $customerData = array(
-                "event" => "customer_account_edited",
-                "customer_id" => $customer->getId(),
-                "customer_name" => $customer->getFirstname() . ' ' . $customer->getLastname(),
-                "email" =>  $customer->getEmail(),
-                "phone" => $this->tools->getPhone($customer),
-                "changes" => array(
-                  "first_name" => $customer->getFirstName(),
-                  "last_name" => $customer->getLastName(),
-                  "phone" => $this->tools->getPhone($customer)
-                ),
-                "edited_at" => $customer->getUpdatedAt()
-            );
-
-
             try {
+                $customerEmail = $observer->getEmail();
+                $customer = $this->tools->loadCustomerByEmail($customerEmail);
+                $customerData = array(
+                    "event" => "customer_account_edited",
+                    "customer_id" => $customer->getId(),
+                    "customer_name" => $customer->getFirstname() . ' ' . $customer->getLastname(),
+                    "email" =>  $customer->getEmail(),
+                    "phone" => $this->tools->getPhone($customer),
+                    "changes" => array(
+                    "first_name" => $customer->getFirstName(),
+                    "last_name" => $customer->getLastName(),
+                    "phone" => $this->tools->getPhone($customer)
+                    ),
+                    "edited_at" => $customer->getUpdatedAt()
+                );
+            
                 $this->saveData->save($customerData, StatusPostbacks::PENDDING);
             } catch(\Exception $e) {
                 $this->logger->error(print_r($e->getMessage(), true));

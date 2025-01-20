@@ -4,6 +4,7 @@
 * @category SMSFunnel
 * @copyright Copyright (c) 2024 SMSFUNNEL - Magento Solution Partner.
 * @author SMSFunnel
+* @Support Leonardo Menezes - suporte@smsfunnel.com.br
 */
 declare(strict_types=1);
 
@@ -18,6 +19,8 @@ use Magento\Framework\Pricing\Helper\Data;
 use Magento\Framework\Locale\CurrencyInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Sales\Api\CreditmemoRepositoryInterface;
+use Magento\Framework\App\ResourceConnection;
+
 
 class Tools
 {
@@ -30,6 +33,7 @@ class Tools
      * @param CurrencyInterface $currency
      * @param StoreManagerInterface $storeManager
      * @param CreditmemoRepositoryInterface $creditmemoRepository
+     * @param ResourceConnection $resource
      */
     public function __construct(
         private TimezoneInterface $timezone,
@@ -39,7 +43,8 @@ class Tools
         private Data $priceHelper,
         private CurrencyInterface $currency,
         private StoreManagerInterface $storeManager,
-        private CreditmemoRepositoryInterface $creditmemoRepository
+        private CreditmemoRepositoryInterface $creditmemoRepository,
+        private ResourceConnection $resource
     ) {}
 
     /**
@@ -168,18 +173,60 @@ class Tools
     }
 
 
+    /**
+     * @param mixed $customerId
+     * @return mixed
+     */
     public function getPhoneByCustomerId($customerId)
     {
         try {
             $customer = $this->loadCustomer($customerId);
             if ($customer->getId())
             {
-                return $customer->getTelephone();
+                $customAttributes = $customer->getCustomAttributes();
+                $attribute = $customAttributes['phone'];
+                if (gettype($customAttributes) == 'array')
+                {
+                    foreach($customAttributes as $attibute)
+                    {
+                        if ($attribute->getAttributeCode() == 'phone')
+                        {
+                            return $attribute->getValue();
+                        }
+                    }
+                }
+                return '';
             }
         } catch (\Exception $e) {
             $this->logger->error($e->getMessage());
         }
     }
+    
+    /**
+     * @return int|string
+     */
+    public function getShipmentDetails()
+    {
+        try {
+            $salesShipmentId = '';
+            $connection = $this->resource->getConnection();
+            $tableName = $this->resource->getTableName('sales_shipment');
 
+            $query = "SELECT MAX(entity_id) as shipment_id FROM  " . $tableName;
+            $result = $connection->fetchAll($query);
 
+            if (is_array($result))
+            {
+                foreach($result as $entityId)
+                {
+                    $salesShipmentId = 1 + (int)$entityId['shipment_id'];
+                }
+            }
+
+            return $salesShipmentId;
+
+        } catch (\Exception $e) {
+            $this->logger->error($e->getMessage());
+        }
+    }
 }

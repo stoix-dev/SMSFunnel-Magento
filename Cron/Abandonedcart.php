@@ -4,6 +4,7 @@
 * @category SMSFunnel
 * @copyright Copyright (c) 2024 SMSFUNNEL - Magento Solution Partner.
 * @author SMSFunnel
+* @Support Leonardo Menezes - suporte@smsfunnel.com.br
 */
 declare(strict_types=1);
 
@@ -60,13 +61,12 @@ class Abandonedcart
                         $customerData = array(
                             "event" => "checkout_cart_abandoned",
                             "customer_id" => $item->getCustomerId() ? $item->getCustomerId() : 'Guest' ,
-                            "customer_name" => $item->getCustomerId() ? $item->getFirstname() . ' ' . $item->getLastname() : 'Guest',
-                            "email" =>  $item->getCustomerId() ? $item->getEmail() : 'Guest',
-                            "phone" => $item->getCustomerId() ? $this->tools->getPhoneByCustomerId($item->getCustomerId()) : '',
+                            "customer_name" => $item->getCustomerId() ? $item->getCustomerFirstname() . ' ' . $item->getCustomerLastname() : 'Guest',
+                            "email" =>  $item->getCustomerId() ? $item->getCustomerEmail() : 'Guest',
+                            "phone" => $item->getCustomerId() ? (string)$this->tools->getPhoneByCustomerId((int)$item->getCustomerId()) : '',
                             "abandoned_at" => $this->tools->getTime()
                         );
-                        
-                        if (!$item->getCustomerId())
+                        if ($item->getCustomerId())
                         {
                             $this->saveData->save($customerData, StatusPostbacks::PENDDING);
                         }
