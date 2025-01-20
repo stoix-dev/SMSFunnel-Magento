@@ -12,6 +12,7 @@
             "email": "suporte@smsfunnel.com.br"
         }
     ],
+    "version": "1.0.1",
     "minimum-stability": "dev",
     "require": {},
     "autoload": {
