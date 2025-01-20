@@ -4,6 +4,7 @@
 * @category SMSFunnel
 * @copyright Copyright (c) 2024 SMSFUNNEL - Magento Solution Partner.
 * @author SMSFunnel
+* @Support Leonardo Menezes - suporte@smsfunnel.com.br
 */
 
 declare(strict_types=1);

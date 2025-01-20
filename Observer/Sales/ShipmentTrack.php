@@ -1,6 +1,6 @@
 <?php
 /**
-* SMSFunnel | OrderInvoiceRegister.php
+* SMSFunnel | OrderInvoiceCancel.php
 * @category SMSFunnel
 * @copyright Copyright (c) 2024 SMSFUNNEL - Magento Solution Partner.
 * @author SMSFunnel
@@ -18,9 +18,8 @@ use SmsFunnel\SmsFunnel\Logger\Logger;
 use SmsFunnel\SmsFunnel\Model\SaveData;
 use SmsFunnel\SmsFunnel\Model\StatusPostbacks;
 use SmsFunnel\SmsFunnel\Model\Tools;
-use Magento\Sales\Model\Order\Invoice;
 
-class OrderInvoiceRegister implements ObserverInterface
+class ShipmentTrack implements ObserverInterface
 {
 
     /**
@@ -53,15 +52,14 @@ class OrderInvoiceRegister implements ObserverInterface
                     $order = $invoice->getOrder();
                     $customer = $this->tools->loadCustomerByEmail($order->getCustomerEmail());
                     $payload = array(
-                        "event" => "sales_order_invoice_register",
+                        "event" => "sales_order_invoice_cancel",
                         "invoice_id" => $invoice->getIncrementId(),
                         "order_id" => $order->getIncrementId(),
                         "customer_id" => $order->getCustomerId(),
                         "customer_name" => $customer->getFirstname() . ' ' . $customer->getLastname(),
                         "email" =>  $customer->getEmail(),
                         "phone" => $this->tools->getPhone($customer),
-                        "amount" => $order->getTotalInvoiced(),
-                        "registered_at" => $this->tools->getTime()
+                        "canceled_at" => $this->tools->getTime()
                     );
 
                     $this->saveData->save($payload, StatusPostbacks::PENDDING);

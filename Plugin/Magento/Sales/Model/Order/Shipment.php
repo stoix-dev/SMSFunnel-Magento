@@ -4,6 +4,7 @@
 * @category SMSFunnel
 * @copyright Copyright (c) 2024 SMSFUNNEL - Magento Solution Partner.
 * @author SMSFunnel
+* @Support Leonardo Menezes - suporte@smsfunnel.com.br
 */
 declare(strict_types=1);
 
@@ -43,19 +44,20 @@ class Shipment
         {
             try {
                 try {
-                    $param = $subject->getRequest()->getParams();
-                    $orderId = $param['order_id'];
+                    $orderId = $subject->getOrder()->getData('entity_id');
                     $order = $this->tools->loadOrder($orderId);
                     $customer = $this->tools->loadCustomerByEmail($order->getCustomerEmail());
                     $payload = array(
-                        "event" => "sales_order_comment_save_after",
+                        "event" => "sales_order_shipment_track_save_after",
+                        "shipment_id" => $this->tools->getShipmentDetails($orderId),
                         "order_id" => $order->getIncrementId(),
                         "customer_id" => $order->getCustomerId(),
                         "customer_name" => $customer->getFirstname() . ' ' . $customer->getLastname(),
                         "email" =>  $customer->getEmail(),
                         "phone" => $this->tools->getPhone($customer),
-                        "comment" => $param['history']['comment'],
-                        "commented_at" => $this->tools->getTime()
+                        "tracking_number" => $track->getTrackNumber(),
+                        "carrier" => $track->getTitle(),
+                        "tracking_updated_at" => $this->tools->getTime()
                     );
 
                     $this->saveData->save($payload, StatusPostbacks::PENDDING);
@@ -68,5 +70,15 @@ class Shipment
         }
 
         return $result;
+    }
+
+    public function getShipmentId($order)
+    {
+        $shipmentCollection = $order->getShipmentsCollection();
+        $shipmentId = [];
+        foreach ($shipmentCollection as $shipment) {
+            $shipmentId[] = $shipment->getId();
+        }
+        return $shipmentId;
     }
 }

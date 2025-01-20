@@ -93,17 +93,24 @@ class AddCustomerPhone implements DataPatchInterface, PatchRevertableInterface
            \Magento\Customer\Model\Customer::ENTITY,
            'phone',
            [
-               'type' => 'varchar',
-               'label' => 'Phone',
-               'input' => 'text',
-               'source' => '',
-               'required' => true,
-               'visible' => true,
-               'user_defined' => 1,
-               'sort_order' => 999,
-               'position' => 999,
-               'system' => false,
-               'backend' => ''
+                'group' => 'General',
+                'type' => 'varchar',
+                'label' => 'Phone',
+                'input' => 'text',
+                'source' => '',
+                'required' => true,
+                'visible' => true,
+                'user_defined' => 1,
+                'sort_order' => 999,
+                'position' => 999,
+                'system' => false,
+                'global' => true,
+                'backend' => '',
+                'is_used_in_grid' => true,
+                'is_visible_in_grid' => true,
+                'is_filterable_in_grid' => true,
+                'is_searchable_in_grid' => false,
+                'visible_on_front' => true
            ]
        );
 
@@ -147,3 +154,4 @@ class AddCustomerPhone implements DataPatchInterface, PatchRevertableInterface
        return [];
    }
 }
+
